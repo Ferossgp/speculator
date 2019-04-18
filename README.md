@@ -1,1 +1,1 @@
-# speculator
+# speculate

@@ -3,4 +3,14 @@
          org.clojure/tools.namespace    {:mvn/version "0.2.11"}
          org.clojure/tools.analyzer     {:mvn/version "0.6.9"}
          org.clojure/tools.analyzer.jvm {:mvn/version "0.7.2"}
-         org.clojure/core.memoize       {:mvn/version "0.5.8"}}}
+         org.clojure/core.memoize       {:mvn/version "0.5.8"}}
+ :aliases
+ {:aot
+  {:extra-paths ["classes"]
+   :main-opts
+   ["-e"
+    "(binding[clojure.core/*compiler-options*{:direct-linking,true}](compile,'speculator.core))"]}
+  :pack {:extra-deps
+         {pack/pack.alpha {:git/url "https://github.com/juxt/pack.alpha.git"
+                           :sha     "81b9e47d992b17aa3e3af1a47aed1f0287ebe9b8"}}
+         :main-opts ["-m"]}}}

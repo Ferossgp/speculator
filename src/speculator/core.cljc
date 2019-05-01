@@ -1,8 +1,12 @@
 (ns speculator.core
   (:require  [speculator.utils :as su]
              [clojure.spec.alpha :as s]
+             [clojure.tools.namespace.file :as ns-file]
+             [clojure.tools.namespace.parse :as ns-parse]
+             [clojure.java.io :as io]
              [speculator.flow :as flow]
-             [speculator.types :as types]))
+             [speculator.types :as types]
+             [clojure.tools.namespace.track :refer [tracker]]))
 
 (declare emit)
 (defn concat-emits [& xs]
@@ -162,16 +166,15 @@
 (defmethod speculate :try [node] (print "try"))
 
 (defmethod speculate :default [c]
-  (clojure.pprint/pprint (:op c)))
+  (print (:op c)))
 
-(print "
-type Integer = int;
-type Number = int;
 
-procedure add(x:int,y:int) returns(r:int);
-procedure minus(x:int,y:int) returns(r:int);
-")
-
-(def form '(if true 1 2))
-(let [ast (flow/analyze-form form)]
-  (clojure.pprint/pprint ast))
+(defn -main [& args]
+  (for [arg args]
+    (let [code       (load-file arg)
+          file-name  (str arg ".bpl")
+          ast        (flow/analyze-form code)
+          translated (emit ast)]
+      (println "Translating: " code)
+      (println "Ast:" ast)
+      (spit file-name translated))))

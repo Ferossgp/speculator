@@ -1,4 +1,5 @@
 # Speculator
+# NOTE: This repository is not ready and will contain the code for the approach theoretically described in my Bachelor Thesis and [Paper](https://link.springer.com/chapter/10.1007%2F978-3-030-29852-4_5). It contains the code which was used to test the ability to use that approach (Translation of Clojure to Boogie).
 
 Speculator is a tool to translate Clojure code to Boogie. The tool aims to find ahead of time errors in program. 
 
